@@ -1,10 +1,8 @@
 FROM openjdk:21
-
 MAINTAINER "LumaCong"
-
+VOLUME /tmp
 EXPOSE 8080
+ARG JAR_FILE=target/Docker-Jenkins-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} app.jar
 
-RUN mkdir -p /data/project
-ADD target/Docker-Jenkins-0.0.1-SNAPSHOT.jar /data/project/Docker-Jenkins-0.0.1-SNAPSHOT.jar
-
-ENTRYPOINT ["/bin/sh", "-c", "java -jar /data/project/Docker-Jenkins-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
